@@ -6,6 +6,7 @@ class OutOfStock(Exception):
 
 
 def available(sku: str) -> int:
+    """Units of `sku` on hand (0 if unknown)."""
     return _STOCK.get(sku, 0)
 
 
