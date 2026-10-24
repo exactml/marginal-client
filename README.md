@@ -43,6 +43,7 @@ Every PR here is reviewed with marginal's current `master`.
 | 6 | Lockfile-only change | `uv lock --upgrade-package pydantic` | No model call; `1 file(s) not reviewed` |
 | 7 | Draft PR | Open any change as a draft | No review; marking it ready triggers one |
 | 8 | Opt-out label | Add the `skip-review` label, then push | No review on that push |
+| 9 | Secret in a URL | Add `REGISTRY_URI = "https://ml-bot:<password>@mlflow.example.com"` | Summary says `⚠️ Redacted a likely secret` for that file; the password appears nowhere in marginal's output |
 
 ## Testing an unmerged marginal branch
 
