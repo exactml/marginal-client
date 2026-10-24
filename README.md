@@ -46,8 +46,9 @@ Every PR here is reviewed with marginal's current `master`.
 
 ## Testing an unmerged marginal branch
 
-To check a marginal PR before it merges, open the matching scenario PR here,
-then review it with that branch:
+To check a marginal PR before it merges, open the matching scenario PR here
+from a `prove-it/<marginal-branch>` branch (those skip the automatic `master`
+review), then review it with that branch:
 
 ```bash
 gh workflow run marginal.yml -R exactml/marginal-client -f ref=<marginal-branch> -f pr=<PR number here>

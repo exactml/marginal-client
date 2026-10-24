@@ -22,6 +22,9 @@ concurrency:
 
 jobs:
   review:
+    # prove-it's scenario PRs are reviewed only by the manual run with the
+    # branch under test; a master review first would dedupe its findings away.
+    if: github.event_name == 'workflow_dispatch' || !startsWith(github.head_ref, 'prove-it/')
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
