@@ -46,5 +46,5 @@ Scenarios 6–8 need marginal ≥ 0.2.9.
 
 Friction found while installing marginal here, to fix in marginal's docs:
 
-- `marginal --version` prints nothing, so there's no quick way to confirm
-  which release `uvx`/`pip` installed.
+- There's no `marginal --version` (it exits 2 with a usage error), so
+  there's no quick way to confirm which release `uvx`/`pip` installed.
