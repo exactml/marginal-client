@@ -14,8 +14,13 @@ context:
 ownership:
   codeowners: true
   notify_responsible: false
-models: {}
-policies: []
+models:
+  reviewer:
+    provider: anthropic
+    model: claude-sonnet-5
+policies:
+  - .marginal/policies/money.md
+  - .marginal/policies/testing.md
 anti_policies: []
 permissions:
   read:
