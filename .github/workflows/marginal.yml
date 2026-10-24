@@ -1,0 +1,24 @@
+name: marginal
+
+on:
+  pull_request:
+
+# One review per PR at a time: two runs started by quick successive pushes
+# would each miss the other's review and post the same header twice.
+concurrency:
+  group: marginal-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: exactml/marginal-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # Only the key for the provider in .marginal/config.yaml is used;
+          # the other secret can stay unset.
+          anthropic-api-key: ${{ secrets.ANTHROPIC_API_KEY }}
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
