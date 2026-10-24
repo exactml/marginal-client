@@ -1,24 +1,54 @@
 name: marginal
 
+# Installs marginal from git instead of PyPI (marginal-action), so unreleased
+# changes are tested here before a release is cut. The released path is
+# already exercised by marginal's own repo, which runs marginal-action@v1.
 on:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  # prove-it: review a PR here with an unmerged marginal branch.
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: marginal branch, tag, or SHA to install
+        default: master
+      pr:
+        description: Pull request number to review
+        required: true
 
-# One review per PR at a time: two runs started by quick successive pushes
-# would each miss the other's review and post the same header twice.
 concurrency:
-  group: marginal-${{ github.event.pull_request.number }}
+  group: marginal-${{ github.event.pull_request.number || inputs.pr }}
   cancel-in-progress: false
 
 jobs:
   review:
+    # prove-it's scenario PRs are reviewed only by the manual run with the
+    # branch under test; a master review first would dedupe its findings away.
+    if: github.event_name == 'workflow_dispatch' || !startsWith(github.head_ref, 'prove-it/')
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+      # Resolving a review thread needs contents: write; marginal never pushes.
+      contents: write
+    env:
+      PR: ${{ github.event.pull_request.number || inputs.pr }}
+      REF: ${{ inputs.ref || 'master' }}
     steps:
-      - uses: exactml/marginal-action@v1
+      - uses: actions/checkout@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          # Only the key for the provider in .marginal/config.yaml is used;
-          # the other secret can stay unset.
-          anthropic-api-key: ${{ secrets.ANTHROPIC_API_KEY }}
-          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          ref: refs/pull/${{ env.PR }}/head
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install marginal from git
+        run: pip install "marginal-review[anthropic] @ git+https://github.com/exactml/marginal@${REF}"
+
+      - name: Review
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          echo "marginal @ ${REF}: $(marginal --version)"
+          marginal review --repo "${{ github.repository }}" --pr "$PR" --comment
