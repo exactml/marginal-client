@@ -1,6 +1,6 @@
 version: 1
 review:
-  enabled: true
+  enabled: false
   inline_comments: true
   confidence_threshold: 0.85
   max_comments: 8
@@ -21,7 +21,8 @@ models:
 policies:
   - .marginal/policies/money.md
   - .marginal/policies/testing.md
-anti_policies: []
+anti_policies:
+  - .marginal/anti-policies/rounding.md
 permissions:
   read:
     repository: true
