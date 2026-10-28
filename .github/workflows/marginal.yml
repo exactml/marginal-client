@@ -32,7 +32,7 @@ jobs:
       contents: write
     env:
       PR: ${{ github.event.pull_request.number || inputs.pr }}
-      REF: ${{ inputs.ref || 'master' }}
+      REF: ${{ inputs.ref || 'refs/pull/204/head' }}
     steps:
       - uses: actions/checkout@v4
         with:
