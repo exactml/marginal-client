@@ -2,10 +2,8 @@ version: 1
 review:
   enabled: true
   inline_comments: true
-  confidence_threshold: 0.85
   max_comments: 8
   max_prompt_tokens: 100000
-  self_reflect: false
   tone: concise
 context:
   git_history: true
