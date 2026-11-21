@@ -18,3 +18,7 @@ def get_item(sku: str) -> Item:
         return _CATALOG[sku]
     except KeyError:
         raise UnknownSku(sku) from None
+
+
+def _noop() -> None:
+    """Plain code change for the knowledge-proposal simulation."""
