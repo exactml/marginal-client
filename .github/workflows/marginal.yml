@@ -5,7 +5,8 @@ name: marginal
 # already exercised by marginal's own repo, which runs marginal-action@v1.
 on:
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+    # closed: a merged PR posts marginal's knowledge proposal.
+    types: [opened, synchronize, reopened, ready_for_review, closed]
   # prove-it: review a PR here with an unmerged marginal branch.
   workflow_dispatch:
     inputs:
@@ -24,7 +25,9 @@ jobs:
   review:
     # prove-it's scenario PRs are reviewed only by the manual run with the
     # branch under test; a master review first would dedupe its findings away.
-    if: github.event_name == 'workflow_dispatch' || !startsWith(github.head_ref, 'prove-it/')
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.action != 'closed' && !startsWith(github.head_ref, 'prove-it/'))
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -52,3 +55,28 @@ jobs:
         run: |
           echo "marginal @ ${REF}: $(marginal --version)"
           marginal review --repo "${{ github.repository }}" --pr "$PR" --comment
+
+  # Knowledge proposal: one comment when a PR merges. No model call.
+  propose:
+    if: github.event.action == 'closed' && github.event.pull_request.merged
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+    env:
+      # Set the MARGINAL_REF variable to try an unmerged marginal branch.
+      REF: ${{ vars.MARGINAL_REF || 'master' }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install marginal from git
+        run: pip install "marginal-review @ git+https://github.com/exactml/marginal@${REF}"
+
+      - name: Propose
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "marginal @ ${REF}: $(marginal --version)"
+          marginal propose --repo "${{ github.repository }}" --pr "${{ github.event.pull_request.number }}" --comment
