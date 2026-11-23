@@ -1,0 +1,7 @@
+repo: marginal-client
+kind: decision
+statement: 'Intentional: unknown SKUs count as one in stock, because new catalog items
+  sell from a sample unit before their stock record loads.'
+about: shop/stock.py
+pr: 25
+author: exactml
