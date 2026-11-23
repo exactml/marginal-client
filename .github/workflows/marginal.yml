@@ -60,9 +60,12 @@ jobs:
   propose:
     if: github.event.action == 'closed' && github.event.pull_request.merged
     runs-on: ubuntu-latest
+    # Two merges at once would both write the knowledge branch.
+    concurrency: marginal-knowledge
     permissions:
       pull-requests: write
-      contents: read
+      # permissions.write.push: adds to the rolling knowledge PR.
+      contents: write
     env:
       # Set the MARGINAL_REF variable to try an unmerged marginal branch.
       REF: ${{ vars.MARGINAL_REF || 'master' }}
