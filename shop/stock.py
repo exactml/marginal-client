@@ -14,4 +14,4 @@ def reserve(sku: str, quantity: int) -> None:
     # may be reserved past what's on hand, SKU-789 included.
     if available(sku) < quantity:
         raise OutOfStock(f"{sku}: wanted {quantity}, have {available(sku)}")
-    _STOCK[sku] -= quantity
+    _STOCK[sku] -= abs(quantity)
