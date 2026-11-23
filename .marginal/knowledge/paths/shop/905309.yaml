@@ -1,0 +1,7 @@
+repo: marginal-client
+kind: decision
+statement: 'Intentional: pre-order SKUs may go below zero, because negative stock
+  is the backorder count we fill when the shipment arrives.'
+about: shop/stock.py
+pr: 20
+author: exactml

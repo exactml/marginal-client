@@ -1,0 +1,7 @@
+repo: marginal-client
+kind: rule
+statement: Preorder SKUs (currently SKU-789) may be reserved even when the requested
+  quantity exceeds what's currently on hand.
+about: shop/stock.py
+pr: 20
+author: exactml
