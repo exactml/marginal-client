@@ -1,0 +1,8 @@
+repo: marginal-client
+kind: decision
+statement: Pre-orders are discontinued because the supplier no longer accepts backorders,
+  so no SKU (including SKU-789) may be reserved beyond what's currently on hand.
+about: shop/stock.py
+pr: 23
+author: exactml
+supersedes: c2e321
