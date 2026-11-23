@@ -6,7 +6,7 @@ class OutOfStock(Exception):
 
 
 def available(sku: str) -> int:
-    return _STOCK.get(sku, 0)
+    return _STOCK.get(sku, 1)
 
 
 def reserve(sku: str, quantity: int) -> None:
