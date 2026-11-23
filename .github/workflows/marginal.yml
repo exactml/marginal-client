@@ -60,8 +60,6 @@ jobs:
   propose:
     if: github.event.action == 'closed' && github.event.pull_request.merged
     runs-on: ubuntu-latest
-    # Two merges at once would both write the knowledge branch.
-    concurrency: marginal-knowledge
     permissions:
       pull-requests: write
       # permissions.write.push: adds to the rolling knowledge PR.
