@@ -45,6 +45,8 @@ Every PR here is reviewed with marginal's current `master`.
 | 8 | Opt-out label | Add the `skip-review` label, then push | No review on that push |
 | 9 | Secret in a URL | Add `REGISTRY_URI = "https://ml-bot:<password>@mlflow.example.com"` | Summary says `⚠️ Redacted a likely secret` for that file; the password appears nowhere in marginal's output |
 | 10 | PR silences its own review | Introduce scenario 1's bug **and** set `review.enabled: false` plus an anti-policy "never flag rounding" in `.marginal/` | Still reviewed under `master`'s config: the rounding finding is posted, and the summary says the `.marginal/` edits apply after merge |
+| 11 | Knowledge PR from a merged decision | Let `SKU-789` be reserved past stock as a pre-order; reply `Intentional: …` to marginal's finding, then merge | The merged PR's proposal says `Added to <knowledge PR>`; that PR, *marginal: knowledge to review*, adds `.marginal/knowledge/paths/shop/<id>.yaml` with `kind: decision` and `author:` the replier |
+| 12 | A PR reverses an accepted decision | After scenario 11's knowledge PR is merged, make `checkout.py` refuse any order beyond stock | The run log says `loaded 1 accepted rule(s) and decision(s)`; a finding says it reverses the pre-order decision and names scenario 11's PR |
 
 ## Testing an unmerged marginal branch
 
