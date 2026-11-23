@@ -47,6 +47,10 @@ Every PR here is reviewed with marginal's current `master`.
 | 10 | PR silences its own review | Introduce scenario 1's bug **and** set `review.enabled: false` plus an anti-policy "never flag rounding" in `.marginal/` | Still reviewed under `master`'s config: the rounding finding is posted, and the summary says the `.marginal/` edits apply after merge |
 | 11 | Knowledge PR from a merged decision | Let `SKU-789` be reserved past stock as a pre-order; reply `Intentional: …` to marginal's finding, then merge | The merged PR's proposal says `Added to <knowledge PR>`; that PR, *marginal: knowledge to review*, adds `.marginal/knowledge/paths/shop/<id>.yaml` with `kind: decision` and `author:` the replier |
 | 12 | A PR reverses an accepted decision | After scenario 11's knowledge PR is merged, make `checkout.py` refuse any order beyond stock | The run log says `loaded 1 accepted rule(s) and decision(s)`; a finding says it reverses the pre-order decision and names scenario 11's PR |
+| 13 | A PR replaces an accepted decision, with its reason | Stop pre-orders in `stock.py` with a comment saying why, then merge | No reversal finding; the review's knowledge has `replaces: <id>`; the knowledge PR adds the new file with `supersedes: <id>` and removes the old one |
+| 14 | The team rejects a claim | Delete one claim's file in the knowledge PR, merge it, then merge any PR with a rule or decision | The next knowledge PR's first commit is `Record knowledge rejected in #<knowledge PR>: .marginal/knowledge/rejected/<id>.yaml` |
+| 15 | A rejected claim is proposed again | After 16, merge a PR with the same `Intentional: …` reply on the same file | The proposal comment lists the claim, but no file is written for it |
+| 16 | A knowledge PR is closed unmerged | Close the open knowledge PR, then do 15 | `rejected/` gets every claim it held, and keeps the records it carried |
 
 ## Testing an unmerged marginal branch
 
