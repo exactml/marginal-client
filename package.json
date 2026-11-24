@@ -1,0 +1,8 @@
+{
+  "name": "shop-web",
+  "private": true,
+  "dependencies": {
+    "typescript": "^5.6.0",
+    "lodahs": "^1.0.0"
+  }
+}
