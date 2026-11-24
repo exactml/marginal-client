@@ -1,0 +1,19 @@
+name: action-on-merge
+
+# prove-it for marginal-action v1.2.0's merged-PR path: does the action's
+# checkout work once refs/pull/N/merge is gone? Removed after the check.
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  propose:
+    if: github.event.pull_request.merged && startsWith(github.head_ref, 'prove-it/action-')
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+    steps:
+      - uses: exactml/marginal-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
