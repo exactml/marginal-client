@@ -51,6 +51,7 @@ Every PR here is reviewed with marginal's current `master`.
 | 14 | The team rejects a claim | Delete one claim's file in the knowledge PR, merge it, then merge any PR with a rule or decision | The next knowledge PR's first commit is `Record knowledge rejected in #<knowledge PR>: .marginal/knowledge/rejected/<id>.yaml` |
 | 15 | A rejected claim is proposed again | After 16, merge a PR with the same `Intentional: …` reply on the same file | The proposal comment lists the claim, but no file is written for it |
 | 16 | A knowledge PR is closed unmerged | Close the open knowledge PR, then do 15 | `rejected/` gets every claim it held, and keeps the records it carried |
+| 17 | Dependencies | In `pyproject.toml`, bump `requests` to the latest release and add `reqeusts>=2` | A High finding on `reqeusts` naming `requests`; the run log says `checking 2 added or bumped dependenc(ies)`; no finding on the bump, since `shop/` doesn't import `requests` |
 
 ## Testing an unmerged marginal branch
 
