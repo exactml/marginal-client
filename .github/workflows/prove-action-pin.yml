@@ -1,0 +1,20 @@
+name: prove-action-pin
+
+# prove-it for exactml/marginal-action#11: a pinned marginal-version whose
+# release has no constraints.txt installs anyway and warns once.
+on:
+  pull_request:
+
+jobs:
+  pinned-fallback:
+    if: startsWith(github.head_ref, 'prove-it/')
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+    steps:
+      - uses: exactml/marginal-action@feat/pin-marginal-version-safely
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          marginal-version: "0.3.1"
+          anthropic-api-key: ${{ secrets.ANTHROPIC_API_KEY }}
