@@ -33,3 +33,5 @@ permissions:
     approve: false
     push: true   # only for the rolling knowledge PR (scenario 11)
     merge: false
+dependencies:
+  check: true
