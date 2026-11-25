@@ -52,6 +52,7 @@ Every PR here is reviewed with marginal's current `master`.
 | 15 | A rejected claim is proposed again | After 16, merge a PR with the same `Intentional: …` reply on the same file | The proposal comment lists the claim, but no file is written for it |
 | 16 | A knowledge PR is closed unmerged | Close the open knowledge PR, then do 15 | `rejected/` gets every claim it held, and keeps the records it carried |
 | 17 | Dependencies | Open the PR against a branch whose `.marginal/config.yaml` sets `dependencies: {check: true}` (off by default, and `master` keeps a new user's defaults). In `pyproject.toml`, bump `requests` to the latest release and add `reqeusts>=2`; add a `package.json` with `"typescript": "^5.6.0"` and `"lodahs": "^1.0.0"` | High on `reqeusts` naming `requests`, High on `lodahs` (npm security placeholder); none on `typescript` or the bump, since `shop/` doesn't import `requests`; the run log says `checking 4 added or bumped dependenc(ies)` |
+| 18 | Re-run with nothing changed | Review any PR, then re-run the review on the same head (`gh workflow run marginal.yml -f pr=<n>`) | The run log says `same prompt as the last review, no model call`; nothing new is posted, and the review's hidden `marginal:calls` count stays the same |
 
 ## Testing an unmerged marginal branch
 
