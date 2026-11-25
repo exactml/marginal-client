@@ -1,4 +1,4 @@
-# marginal-client
+# marginal-client 
 
 An end-to-end test customer for [marginal](https://github.com/exactml/marginal).
 It's a small order-pricing app (`shop/`) set up the way marginal's README
