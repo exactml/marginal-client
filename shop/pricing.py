@@ -1,4 +1,4 @@
-from decimal import ROUND_DOWN, Decimal
+from decimal import ROUND_HALF_UP, Decimal
 
 from shop.catalog import get_item
 from shop.models import Order
@@ -32,4 +32,4 @@ def shipping(order: Order) -> Decimal:
 def total(order: Order) -> Decimal:
     net = subtotal(order) - discount(order, subtotal(order))
     gross = net * (1 + TAX_RATE)
-    return gross.quantize(Decimal("0.01"), rounding=ROUND_DOWN)
+    return gross.quantize(Decimal("0.01"), ROUND_HALF_UP)
