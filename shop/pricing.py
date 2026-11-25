@@ -21,7 +21,7 @@ def subtotal(order: Order) -> Decimal:
 
 def discount(order: Order, amount: Decimal) -> Decimal:
     rate = COUPONS.get(order.coupon or "", Decimal("0"))
-    return amount * rate
+    return amount * min(rate, MAX_DISCOUNT_RATE)
 
 
 def shipping(order: Order) -> Decimal:
